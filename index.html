@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RIADHI ADITYA — Engineering Manager</title>
+  <meta name="description" content="Engineering Manager with 10+ years building software across healthcare, logistics, and HR tech.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Source+Code+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Noise grain overlay -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- Custom cursor (desktop) -->
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-follower" id="cursor-follower" aria-hidden="true"></div>
+
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- Command palette -->
+  <div class="palette-overlay" id="palette-overlay"></div>
+  <div class="palette" id="palette" role="dialog" aria-label="Command palette">
+    <div class="palette-input-wrap">
+      <span class="palette-prompt">&gt;</span>
+      <input type="text" id="palette-input" class="palette-input" placeholder="Type a command..." autocomplete="off" spellcheck="false">
+      <kbd class="palette-esc">ESC</kbd>
+    </div>
+    <ul class="palette-list" id="palette-list">
+      <li><a href="#hero" class="palette-item" data-keywords="home top start"><span class="palette-item-icon">⌂</span><span>Go to Home</span><kbd>1</kbd></a></li>
+      <li><a href="#about" class="palette-item" data-keywords="about me bio info"><span class="palette-item-icon">◉</span><span>Go to About</span><kbd>2</kbd></a></li>
+      <li><a href="#experience" class="palette-item" data-keywords="experience work career"><span class="palette-item-icon">◈</span><span>Go to Experience</span><kbd>3</kbd></a></li>
+      <li><a href="#projects" class="palette-item" data-keywords="projects open source github side"><span class="palette-item-icon">◆</span><span>Go to Projects</span><kbd>4</kbd></a></li>
+      <li><a href="#contact" class="palette-item" data-keywords="contact email reach hire"><span class="palette-item-icon">◎</span><span>Go to Contact</span><kbd>5</kbd></a></li>
+    </ul>
+  </div>
+
+  <!-- Top navigation -->
+  <nav class="nav" id="nav">
+    <a href="#hero" class="nav-logo">RZ<span class="accent">.</span></a>
+    <div class="nav-links">
+      <a href="#about" class="nav-link">About</a>
+      <a href="#experience" class="nav-link">Experience</a>
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+    <button class="nav-cmd" id="nav-cmd" aria-label="Open command palette">
+      <kbd>/</kbd>
+    </button>
+  </nav>
+
+  <!-- Side navigation dots -->
+  <nav class="side-nav" aria-label="Section navigation">
+    <a href="#hero" class="side-nav-dot active" data-section="hero" aria-label="Home"></a>
+    <a href="#about" class="side-nav-dot" data-section="about" aria-label="About"></a>
+    <a href="#experience" class="side-nav-dot" data-section="experience" aria-label="Experience"></a>
+    <a href="#projects" class="side-nav-dot" data-section="projects" aria-label="Projects"></a>
+    <a href="#contact" class="side-nav-dot" data-section="contact" aria-label="Contact"></a>
+  </nav>
+
+  <main>
+    <!-- ═══ HERO ═══ -->
+    <section id="hero" class="section hero">
+      <canvas id="particle-canvas" aria-hidden="true"></canvas>
+      <div class="hero-content">
+        <div class="hero-label reveal">
+          <span class="signal-dot"></span>
+          <span>PRODUCT BUILDER</span>
+        </div>
+        <h1 class="hero-title sr-only">RIADHI ADITYA</h1>
+        <p class="hero-tagline reveal">Building products that solve real-world problems and deliver meaningful value</p>
+        <div class="hero-cta reveal">
+          <a href="#experience" class="btn-primary">View Experience</a>
+          <a href="#contact" class="btn-secondary">Get in Touch</a>
+        </div>
+      </div>
+      <div class="scroll-indicator reveal" aria-hidden="true">
+        <span class="scroll-text">SCROLL</span>
+        <div class="scroll-line"></div>
+      </div>
+      <div class="hero-signal" aria-hidden="true">
+        <span class="hero-signal-text">SIGNAL ACQUIRED</span>
+        <span class="hero-signal-bar"></span>
+      </div>
+    </section>
+
+    <!-- ═══ ABOUT ═══ -->
+    <section id="about" class="section about">
+      <div class="section-header reveal">
+        <span class="section-number">01</span>
+        <span class="section-line"></span>
+        <h2 class="section-title">About</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p class="about-intro">Engineering Manager with 10+ years shipping software across healthcare, logistics, and HR tech.</p>
+          <p>I've led cross-functional teams at companies like EngageRocket, Okadoc, Waresix, and Mapan (Gojek) &mdash; managing full product lifecycles from architecture through delivery. My focus is building high-performing teams and the systems they rely on.</p>
+          <p>Currently leading the Survey Engineering Squad at EngageRocket, an award-winning Employee Engagement Platform based in Singapore.</p>
+        </div>
+        <div class="about-stats reveal">
+          <div class="stat">
+            <span class="stat-number" data-count="10">0</span>
+            <span class="stat-suffix">+</span>
+            <span class="stat-label">Years Experience</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-count="4">0</span>
+            <span class="stat-suffix"></span>
+            <span class="stat-label">Industries</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-count="20">0</span>
+            <span class="stat-suffix">+</span>
+            <span class="stat-label">Engineers Led</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-tech reveal">
+        <span class="tech-label">STACK &mdash;</span>
+        <div class="tech-tags">
+          <span class="tech-tag">Golang</span>
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">JavaScript</span>
+          <span class="tech-tag">PHP</span>
+          <span class="tech-tag">PostgreSQL</span>
+          <span class="tech-tag">Redis</span>
+          <span class="tech-tag">Kafka</span>
+          <span class="tech-tag">AWS</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ EXPERIENCE ═══ -->
+    <section id="experience" class="section experience">
+      <div class="section-header reveal">
+        <span class="section-number">02</span>
+        <span class="section-line"></span>
+        <h2 class="section-title">Experience</h2>
+      </div>
+      <div class="projects-grid">
+        <article class="project-card reveal">
+          <div class="project-index">01</div>
+          <div class="project-accent"></div>
+          <div class="project-content">
+            <h3 class="project-title">EngageRocket</h3>
+            <p class="project-desc">Award-winning Employee Engagement Platform. Delivery Lead for Survey Engineering, driving process improvement across the Singapore-based SaaS.</p>
+            <div class="project-tags">
+              <span>Engineering Management</span>
+              <span>SaaS</span>
+              <span>HR Tech</span>
+            </div>
+          </div>
+          <div class="project-link">
+            <span>2025 &ndash; Present</span>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="project-index">02</div>
+          <div class="project-accent"></div>
+          <div class="project-content">
+            <h3 class="project-title">Okadoc</h3>
+            <p class="project-desc">Patient engagement platform across UAE, KSA, and Indonesia. Led cross-functional teams managing product, design, and architecture for multi-market healthcare delivery.</p>
+            <div class="project-tags">
+              <span>Healthcare</span>
+              <span>Golang</span>
+              <span>Multi-market</span>
+            </div>
+          </div>
+          <div class="project-link">
+            <span>2022 &ndash; 2025</span>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="project-index">03</div>
+          <div class="project-accent"></div>
+          <div class="project-content">
+            <h3 class="project-title">Waresix</h3>
+            <p class="project-desc">End-to-end logistics platform for warehouse and trucking services. Tech Lead for Platform Squad, building core products and coaching the engineering team.</p>
+            <div class="project-tags">
+              <span>Logistics</span>
+              <span>Python</span>
+              <span>Golang</span>
+            </div>
+          </div>
+          <div class="project-link">
+            <span>2021 &ndash; 2022</span>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="project-index">04</div>
+          <div class="project-accent"></div>
+          <div class="project-content">
+            <h3 class="project-title">Mapan (Gojek)</h3>
+            <p class="project-desc">Technology company serving lower-income communities. Progressed from Senior Engineer to Head of Tech across Marketplace and Logistics, culminating in team transition to Gojek.</p>
+            <div class="project-tags">
+              <span>Marketplace</span>
+              <span>ERP</span>
+              <span>Agile</span>
+            </div>
+          </div>
+          <div class="project-link">
+            <span>2015 &ndash; 2021</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══ PROJECTS ═══ -->
+    <section id="projects" class="section projects">
+      <div class="section-header reveal">
+        <span class="section-number">03</span>
+        <span class="section-line"></span>
+        <h2 class="section-title">Projects</h2>
+      </div>
+      <div class="oss-grid">
+        <a href="https://github.com/ridzeal/tmux-portal" class="oss-card reveal" target="_blank" rel="noopener">
+          <div class="oss-card-header">
+            <span class="oss-icon">&#9656;</span>
+            <span class="oss-lang">Go</span>
+          </div>
+          <h4 class="oss-title">tmux-portal</h4>
+          <p class="oss-desc">Control tmux sessions from your browser. Real-time terminal interaction through a web interface.</p>
+        </a>
+
+        <a href="https://github.com/ridzeal/iris" class="oss-card reveal" target="_blank" rel="noopener">
+          <div class="oss-card-header">
+            <span class="oss-icon">&#9656;</span>
+            <span class="oss-lang">ERP</span>
+          </div>
+          <h4 class="oss-title">IRIS</h4>
+          <p class="oss-desc">Plantation ERP system covering accounting, budgeting, HR, mill management, and sales modules.</p>
+        </a>
+
+        <a href="https://github.com/ridzeal/resi-tracker-web" class="oss-card reveal" target="_blank" rel="noopener">
+          <div class="oss-card-header">
+            <span class="oss-icon">&#9656;</span>
+            <span class="oss-lang">TypeScript</span>
+          </div>
+          <h4 class="oss-title">Resi Tracker</h4>
+          <p class="oss-desc">Package tracking platform with backend API serving web and Android frontends.</p>
+        </a>
+
+        <a href="https://github.com/ridzeal/qwen-telegram-bridge" class="oss-card reveal" target="_blank" rel="noopener">
+          <div class="oss-card-header">
+            <span class="oss-icon">&#9656;</span>
+            <span class="oss-lang">JavaScript</span>
+          </div>
+          <h4 class="oss-title">Qwen Telegram Bridge</h4>
+          <p class="oss-desc">Access Qwen Code from a Telegram bot, including local instances. AI in your pocket.</p>
+        </a>
+
+        <a href="https://github.com/ridzeal/zeal-auth" class="oss-card reveal" target="_blank" rel="noopener">
+          <div class="oss-card-header">
+            <span class="oss-icon">&#9656;</span>
+            <span class="oss-lang">Go</span>
+          </div>
+          <h4 class="oss-title">Zeal Auth</h4>
+          <p class="oss-desc">Core authentication microservice for the Zeal Haven product ecosystem.</p>
+        </a>
+
+        <a href="https://github.com/ridzeal/SwagDefGen" class="oss-card reveal" target="_blank" rel="noopener">
+          <div class="oss-card-header">
+            <span class="oss-icon">&#9656;</span>
+            <span class="oss-lang">Tool</span>
+          </div>
+          <h4 class="oss-title">SwagDefGen</h4>
+          <p class="oss-desc">Converts JSON request/response mocks into Swagger definitions. Developer productivity tool.</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- ═══ CONTACT ═══ -->
+    <section id="contact" class="section contact">
+      <div class="section-header reveal">
+        <span class="section-number">04</span>
+        <span class="section-line"></span>
+        <h2 class="section-title">Contact</h2>
+      </div>
+      <div class="contact-content reveal">
+        <h3 class="contact-heading">Let's build<br>something <span class="accent">together</span>.</h3>
+        <div class="contact-links">
+          <a href="mailto:ridzeal@gmail.com" class="contact-link">
+            <span class="contact-link-label">Email</span>
+            <span class="contact-link-value">ridzeal@gmail.com &rarr;</span>
+          </a>
+          <a href="https://www.linkedin.com/in/ridzeal" class="contact-link" target="_blank" rel="noopener">
+            <span class="contact-link-label">LinkedIn</span>
+            <span class="contact-link-value">linkedin.com/in/ridzeal &rarr;</span>
+          </a>
+        </div>
+      </div>
+      <footer class="contact-footer reveal">
+        <span>&copy; 2026 RIDZEAL</span>
+        <span class="footer-dot" aria-hidden="true">&#9679;</span>
+        <span>Built with precision</span>
+        <span class="footer-dot" aria-hidden="true">&#9679;</span>
+        <span>Press <kbd>/</kbd> to navigate</span>
+      </footer>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
