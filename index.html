@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Source+Code+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23050505'/%3E%3Ctext x='8' y='48' font-family='sans-serif' font-weight='800' font-size='40' fill='%23e8e0d4'%3ERZ%3C/text%3E%3Ctext x='44' y='48' font-family='sans-serif' font-weight='800' font-size='40' fill='%23d4ff00'%3E.%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -34,7 +35,8 @@
       <li><a href="#about" class="palette-item" data-keywords="about me bio info"><span class="palette-item-icon">◉</span><span>Go to About</span><kbd>2</kbd></a></li>
       <li><a href="#experience" class="palette-item" data-keywords="experience work career"><span class="palette-item-icon">◈</span><span>Go to Experience</span><kbd>3</kbd></a></li>
       <li><a href="#projects" class="palette-item" data-keywords="projects open source github side"><span class="palette-item-icon">◆</span><span>Go to Projects</span><kbd>4</kbd></a></li>
-      <li><a href="#contact" class="palette-item" data-keywords="contact email reach hire"><span class="palette-item-icon">◎</span><span>Go to Contact</span><kbd>5</kbd></a></li>
+      <li><a href="#demos" class="palette-item" data-keywords="demos product demo live"><span class="palette-item-icon">▶</span><span>Go to Demos</span><kbd>5</kbd></a></li>
+      <li><a href="#contact" class="palette-item" data-keywords="contact email reach hire"><span class="palette-item-icon">◎</span><span>Go to Contact</span><kbd>6</kbd></a></li>
     </ul>
   </div>
 
@@ -45,6 +47,7 @@
       <a href="#about" class="nav-link">About</a>
       <a href="#experience" class="nav-link">Experience</a>
       <a href="#projects" class="nav-link">Projects</a>
+      <a href="#demos" class="nav-link">Demos</a>
       <a href="#contact" class="nav-link">Contact</a>
     </div>
     <button class="nav-cmd" id="nav-cmd" aria-label="Open command palette">
@@ -58,6 +61,7 @@
     <a href="#about" class="side-nav-dot" data-section="about" aria-label="About"></a>
     <a href="#experience" class="side-nav-dot" data-section="experience" aria-label="Experience"></a>
     <a href="#projects" class="side-nav-dot" data-section="projects" aria-label="Projects"></a>
+    <a href="#demos" class="side-nav-dot" data-section="demos" aria-label="Demos"></a>
     <a href="#contact" class="side-nav-dot" data-section="contact" aria-label="Contact"></a>
   </nav>
 
@@ -275,10 +279,110 @@
       </div>
     </section>
 
+    <!-- ═══ PRODUCT DEMO ═══ -->
+    <section id="demos" class="section projects">
+      <div class="section-header reveal">
+        <span class="section-number">04</span>
+        <span class="section-line"></span>
+        <h2 class="section-title">Product Demo</h2>
+      </div>
+      <div class="oss-grid">
+        <a href="https://mermaid.zealhaven.net" class="oss-card reveal" target="_blank" rel="noopener">
+          <div class="oss-card-header">
+            <span class="oss-icon">&#9656;</span>
+            <span class="oss-lang">LIVE</span>
+          </div>
+          <h4 class="oss-title">Mermaid Preview</h4>
+          <p class="oss-desc">Live Mermaid diagram renderer with instant preview.</p>
+        </a>
+
+        <a href="https://mill-dev.zealhaven.net" class="oss-card reveal" target="_blank" rel="noopener">
+          <div class="oss-card-header">
+            <span class="oss-icon">&#9656;</span>
+            <span class="oss-lang">LIVE</span>
+          </div>
+          <h4 class="oss-title">Mill Dev</h4>
+          <p class="oss-desc">Palm oil mill management system development instance.</p>
+        </a>
+
+        <a href="https://dol-dev.zealhaven.net" class="oss-card reveal" target="_blank" rel="noopener">
+          <div class="oss-card-header">
+            <span class="oss-icon">&#9656;</span>
+            <span class="oss-lang">LIVE</span>
+          </div>
+          <h4 class="oss-title">Dolibarr Dev</h4>
+          <p class="oss-desc">ERP development environment with plantation module.</p>
+        </a>
+
+        <a href="https://plant-dev.zealhaven.net" class="oss-card reveal" target="_blank" rel="noopener">
+          <div class="oss-card-header">
+            <span class="oss-icon">&#9656;</span>
+            <span class="oss-lang">LIVE</span>
+          </div>
+          <h4 class="oss-title">Plantation Dev</h4>
+          <p class="oss-desc">Palm oil plantation module for Dolibarr ERP.</p>
+        </a>
+
+        <a href="https://pdf-editor.zealhaven.net" class="oss-card reveal" target="_blank" rel="noopener">
+          <div class="oss-card-header">
+            <span class="oss-icon">&#9656;</span>
+            <span class="oss-lang">LIVE</span>
+          </div>
+          <h4 class="oss-title">PDF Editor</h4>
+          <p class="oss-desc">Browser-based PDF editing and manipulation tool.</p>
+        </a>
+
+        <a href="https://school-dev.zealhaven.net" class="oss-card reveal" target="_blank" rel="noopener">
+          <div class="oss-card-header">
+            <span class="oss-icon">&#9656;</span>
+            <span class="oss-lang">LIVE</span>
+          </div>
+          <h4 class="oss-title">School Dev</h4>
+          <p class="oss-desc">School management system development instance.</p>
+        </a>
+
+        <a href="https://ind-agro-dev.zealhaven.net" class="oss-card reveal" target="_blank" rel="noopener">
+          <div class="oss-card-header">
+            <span class="oss-icon">&#9656;</span>
+            <span class="oss-lang">LIVE</span>
+          </div>
+          <h4 class="oss-title">Ind-Agro Dev</h4>
+          <p class="oss-desc">Indonesian agricultural management platform.</p>
+        </a>
+
+        <a href="https://agro-laravel.zealhaven.net" class="oss-card reveal" target="_blank" rel="noopener">
+          <div class="oss-card-header">
+            <span class="oss-icon">&#9656;</span>
+            <span class="oss-lang">LIVE</span>
+          </div>
+          <h4 class="oss-title">Agro Laravel</h4>
+          <p class="oss-desc">Agriculture ERP built with Laravel framework.</p>
+        </a>
+
+        <a href="https://lotu1-dev.zealhaven.net" class="oss-card reveal" target="_blank" rel="noopener">
+          <div class="oss-card-header">
+            <span class="oss-icon">&#9656;</span>
+            <span class="oss-lang">LIVE</span>
+          </div>
+          <h4 class="oss-title">Lotu1 Dev</h4>
+          <p class="oss-desc">Lotu1 application development instance.</p>
+        </a>
+
+        <a href="https://sso2-dev.zealhaven.net" class="oss-card reveal" target="_blank" rel="noopener">
+          <div class="oss-card-header">
+            <span class="oss-icon">&#9656;</span>
+            <span class="oss-lang">LIVE</span>
+          </div>
+          <h4 class="oss-title">SSO2 Dev</h4>
+          <p class="oss-desc">OAuth2 authentication server for the product ecosystem.</p>
+        </a>
+      </div>
+    </section>
+
     <!-- ═══ CONTACT ═══ -->
     <section id="contact" class="section contact">
       <div class="section-header reveal">
-        <span class="section-number">04</span>
+        <span class="section-number">05</span>
         <span class="section-line"></span>
         <h2 class="section-title">Contact</h2>
       </div>
