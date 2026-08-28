@@ -1,0 +1,249 @@
+// Professional Profile Manager - Database Schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// User authentication
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  image         String?
+  emailVerified DateTime?
+  accounts      Account[]
+  sessions      Session[]
+  profile       Profile?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// Professional Profile
+model Profile {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Personal Information
+  name           String
+  location       String?
+  phone          String?
+  email          String?
+  linkedin       String?
+  website        String?
+  tagline        String?
+  
+  // Related data
+  summaries       ProfessionalSummary[]
+  skillCategories SkillCategory[]
+  experiences     WorkExperience[]
+  projects        Project[]
+  education       Education[]
+  roleProfiles    RoleProfile[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Multiple professional summaries keyed by role type
+model ProfessionalSummary {
+  id        String  @id @default(cuid())
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  
+  roleType String  // e.g., "engineering_manager", "full_stack_engineer"
+  content  String  // The summary text
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@unique([profileId, roleType])
+}
+
+// Categorized skills
+model SkillCategory {
+  id        String  @id @default(cuid())
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  
+  name      String  // e.g., "programming_languages", "frontend", "backend"
+  skills    Skill[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@unique([profileId, name])
+}
+
+model Skill {
+  id             String        @id @default(cuid())
+  categoryId     String
+  category       SkillCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  
+  name           String
+  
+  createdAt DateTime @default(now())
+}
+
+// Work Experience
+model WorkExperience {
+  id        String   @id @default(cuid())
+  profileId String
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  
+  company      String
+  role         String
+  location     String?
+  startDate    DateTime
+  endDate      DateTime?  // null = present
+  type         String?    // "full_time", "contract", "freelance"
+  industry     String?
+  
+  achievements Achievement[]
+  skillsUsed   ExperienceSkill[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Achievement {
+  id           String         @id @default(cuid())
+  experienceId String
+  experience   WorkExperience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  
+  text String
+  tags AchievementTag[]
+  
+  createdAt DateTime @default(now())
+}
+
+model AchievementTag {
+  id            String      @id @default(cuid())
+  achievementId String
+  achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+  
+  name String  // e.g., "management", "technical", "leadership"
+}
+
+model ExperienceSkill {
+  id           String         @id @default(cuid())
+  experienceId String
+  experience   WorkExperience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  
+  name String  // skill name used in this role
+}
+
+// Projects
+model Project {
+  id        String  @id @default(cuid())
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  
+  name        String
+  description String?
+  role        String?
+  skills      ProjectSkill[]
+  tags        ProjectTag[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Project skills and tags (separate tables for SQLite)
+model ProjectSkill {
+  id        String  @id @default(cuid())
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  name String
+}
+
+model ProjectTag {
+  id        String  @id @default(cuid())
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  name String  // e.g., "entrepreneurial", "domain_expertise"
+}
+
+// Education
+model Education {
+  id        String  @id @default(cuid())
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  
+  degree          String
+  institution     String
+  location        String?
+  graduationDate  DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Role Profiles (templates for different job types)
+model RoleProfile {
+  id        String  @id @default(cuid())
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  
+  name                String   // e.g., "engineering_manager"
+  displayName         String   // e.g., "Engineering Manager"
+  summaryKey          String   // references ProfessionalSummary.roleType
+  maxExperienceItems  Int      @default(5)
+  skills              RoleProfileSkill[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@unique([profileId, name])
+}
+
+// Role profile skills (separate tables for SQLite)
+model RoleProfileSkill {
+  id            String      @id @default(cuid())
+  roleProfileId String
+  roleProfile   RoleProfile @relation(fields: [roleProfileId], references: [id], onDelete: Cascade)
+  
+  name String
+  type String  // "highlight", "filter", "exclude"
+}
