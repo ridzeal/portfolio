@@ -37,31 +37,57 @@ export const achievementSchema = z.object({
 
 export type Achievement = z.infer<typeof achievementSchema>
 
-// Work Experience Schema
-export const workExperienceSchema = z.object({
-  company: z.string().min(1, 'Company name is required'),
+// Position Schema (within a company)
+export const positionSchema = z.object({
   role: z.string().min(1, 'Role is required'),
-  location: z.string().optional(),
   startDate: z.string().min(1, 'Start date is required'),
   endDate: z.string().optional().nullable(),
-  type: z.enum(['full_time', 'contract', 'freelance']).optional(),
-  industry: z.string().optional(),
+  workArrangement: z.enum(['remote', 'hybrid', 'onsite']).optional(),
+  myLocation: z.string().optional(),
   achievements: z.array(achievementSchema).optional(),
   skillsUsed: z.array(z.string()).optional(),
 })
 
-export type WorkExperience = z.infer<typeof workExperienceSchema>
+export type Position = z.infer<typeof positionSchema>
+
+// Company Schema (with nested positions)
+export const companySchema = z.object({
+  name: z.string().min(1, 'Company name is required'),
+  description: z.string().optional(),
+  industry: z.string().optional(),
+  website: z.string().optional(),
+  hqLocation: z.string().optional(),
+  positions: z.array(positionSchema).min(1, 'At least one position is required'),
+})
+
+export type Company = z.infer<typeof companySchema>
 
 // Project Schema
 export const projectSchema = z.object({
   name: z.string().min(1, 'Project name is required'),
   description: z.string().optional(),
   role: z.string().optional(),
+  startDate: z.string().optional(),
+  endDate: z.string().optional(),
   skills: z.array(z.string()).optional(),
   tags: z.array(z.string()).optional(),
 })
 
 export type Project = z.infer<typeof projectSchema>
+
+// Product Schema (portfolio / sellable products)
+export const productSchema = z.object({
+  name: z.string().min(1, 'Product name is required'),
+  description: z.string().optional(),
+  url: z.string().optional(),
+  logo: z.string().optional(),
+  skills: z.array(z.string()).optional(),
+  tags: z.array(z.string()).optional(),
+  startDate: z.string().optional(),
+  endDate: z.string().optional(),
+})
+
+export type Product = z.infer<typeof productSchema>
 
 // Education Schema
 export const educationSchema = z.object({
@@ -91,8 +117,9 @@ export const profileSchema = z.object({
   personalInfo: personalInfoSchema,
   summaries: z.array(summarySchema),
   skillCategories: z.array(skillCategorySchema),
-  experiences: z.array(workExperienceSchema),
+  companies: z.array(companySchema),
   projects: z.array(projectSchema),
+  products: z.array(productSchema),
   education: z.array(educationSchema),
   roleProfiles: z.array(roleProfileSchema),
 })

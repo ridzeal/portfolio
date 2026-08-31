@@ -1,5 +1,5 @@
 import { prisma } from './db'
-import type { Profile, PersonalInfo, Summary, SkillCategory, WorkExperience, Project, Education, RoleProfile } from '@/types/profile'
+import type { Profile, Company, Position } from '@/types/profile'
 
 // Get profile by user ID
 export async function getProfile(userId: string): Promise<Profile | null> {
@@ -36,6 +36,33 @@ export async function getProfile(userId: string): Promise<Profile | null> {
 
   if (!profile) return null
 
+  // Group flat experiences into company-nested positions
+  const companyMap = new Map<string, Company>()
+  for (const e of profile.experiences) {
+    const existing = companyMap.get(e.company)
+    const position: Position = {
+      role: e.role,
+      startDate: e.startDate.toISOString().split('T')[0],
+      endDate: e.endDate?.toISOString().split('T')[0] || null,
+      myLocation: e.location || undefined,
+      achievements: e.achievements.map((a) => ({
+        text: a.text,
+        tags: a.tags.map((t) => t.name),
+      })),
+      skillsUsed: e.skillsUsed.map((s) => s.name),
+    }
+    if (existing) {
+      existing.positions.push(position)
+    } else {
+      companyMap.set(e.company, {
+        name: e.company,
+        industry: e.industry || undefined,
+        hqLocation: e.location || undefined,
+        positions: [position],
+      })
+    }
+  }
+
   return {
     personalInfo: {
       name: profile.name,
@@ -54,20 +81,7 @@ export async function getProfile(userId: string): Promise<Profile | null> {
       name: sc.name,
       skills: sc.skills.map((s) => s.name),
     })),
-    experiences: profile.experiences.map((e) => ({
-      company: e.company,
-      role: e.role,
-      location: e.location || undefined,
-      startDate: e.startDate.toISOString().split('T')[0],
-      endDate: e.endDate?.toISOString().split('T')[0] || null,
-      type: e.type as 'full_time' | 'contract' | 'freelance' | undefined,
-      industry: e.industry || undefined,
-      achievements: e.achievements.map((a) => ({
-        text: a.text,
-        tags: a.tags.map((t) => t.name),
-      })),
-      skillsUsed: e.skillsUsed.map((s) => s.name),
-    })),
+    companies: Array.from(companyMap.values()),
     projects: profile.projects.map((p) => ({
       name: p.name,
       description: p.description || undefined,
@@ -75,6 +89,7 @@ export async function getProfile(userId: string): Promise<Profile | null> {
       skills: p.skills.map((s) => s.name),
       tags: p.tags.map((t) => t.name),
     })),
+    products: [],
     education: profile.education.map((ed) => ({
       degree: ed.degree,
       institution: ed.institution,
@@ -94,8 +109,9 @@ export async function getProfile(userId: string): Promise<Profile | null> {
 }
 
 // Create or update profile
+// NOTE: This currently uses the flat Prisma schema. When the schema is migrated
+// to support company-nested positions, this will need updating.
 export async function upsertProfile(userId: string, data: Profile): Promise<void> {
-  // Upsert profile
   const profile = await prisma.profile.upsert({
     where: { userId },
     create: {
@@ -134,7 +150,6 @@ export async function upsertProfile(userId: string, data: Profile): Promise<void
     const existingCategory = await prisma.skillCategory.findFirst({
       where: { profileId: profile.id, name: category.name },
     })
-
     if (existingCategory) {
       await prisma.skill.deleteMany({ where: { categoryId: existingCategory.id } })
       await prisma.skill.createMany({
@@ -156,32 +171,34 @@ export async function upsertProfile(userId: string, data: Profile): Promise<void
     }
   }
 
-  // Delete and recreate experiences
+  // Flatten companies back to experiences for Prisma storage
   await prisma.workExperience.deleteMany({ where: { profileId: profile.id } })
-  for (const experience of data.experiences) {
-    await prisma.workExperience.create({
-      data: {
-        profileId: profile.id,
-        company: experience.company,
-        role: experience.role,
-        location: experience.location,
-        startDate: new Date(experience.startDate),
-        endDate: experience.endDate ? new Date(experience.endDate) : null,
-        type: experience.type,
-        industry: experience.industry,
-        achievements: {
-          create: (experience.achievements || []).map((a) => ({
-            text: a.text,
-            tags: {
-              create: (a.tags || []).map((tag) => ({ name: tag })),
-            },
-          })),
+  for (const company of data.companies) {
+    for (const position of company.positions) {
+      await prisma.workExperience.create({
+        data: {
+          profileId: profile.id,
+          company: company.name,
+          role: position.role,
+          location: position.myLocation || company.hqLocation,
+          startDate: new Date(position.startDate),
+          endDate: position.endDate ? new Date(position.endDate) : null,
+          type: 'full_time',
+          industry: company.industry,
+          achievements: {
+            create: (position.achievements || []).map((a) => ({
+              text: a.text,
+              tags: {
+                create: (a.tags || []).map((tag) => ({ name: tag })),
+              },
+            })),
+          },
+          skillsUsed: {
+            create: (position.skillsUsed || []).map((skill) => ({ name: skill })),
+          },
         },
-        skillsUsed: {
-          create: (experience.skillsUsed || []).map((skill) => ({ name: skill })),
-        },
-      },
-    })
+      })
+    }
   }
 
   // Delete and recreate projects
